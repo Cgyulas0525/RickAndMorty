@@ -24,10 +24,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->booting(function() {
             $loader = AliasLoader::getInstance();
-            $loader->alias('FinanceClass', FinanceClass::class);
-            $loader->alias('FinancePeriodClass', FinancePeriodClass::class);
-            $loader->alias('ClosuresClass', ClosuresClass::class);
-            $loader->alias('RiportsClass', RiportsClass::class);
             $loader->alias('DashboardController', DashboardController::class);
         });
     }

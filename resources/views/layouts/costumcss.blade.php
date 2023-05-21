@@ -1,5 +1,10 @@
 <style>
 
+    .rmpicture{
+        max-height: 750px !important;
+        width: 750px !important;
+    }
+
     .finance-button-container{
         display: flex;
         justify-content: center;

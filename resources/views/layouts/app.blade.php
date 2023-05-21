@@ -5,7 +5,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name') }}</title>
-    <link rel="icon" href={{ URL::asset('/public/img/budget.jpg')}}/>
+    <link rel="icon" href={{ URL::asset('/img/rm.jpg')}}/>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
     <!-- Font Awesome -->
@@ -73,7 +73,7 @@
 <body class="hold-transition skin-black-light sidebar-mini">
 <div class="wrapper">
     <!-- Main Header -->
-    <nav class="main-header navbar-nav navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar-nav navbar-expand navbar-white navbar-dark">
         <!-- Left navbar links -->
         <ul class="navbar-nav">
             <li class="nav-item">
