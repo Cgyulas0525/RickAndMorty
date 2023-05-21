@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Services\CharacterService;
 use App\Services\EpisodeService;
-use App\Models\Episodecharacters;
+use App\Services\EpisodeCharacterService;
 
 use DB;
 
@@ -25,6 +25,7 @@ class DownloadController extends Controller
 
             $characterService = new CharacterService();
             $episodeService = new EpisodeService();
+            $episodeCharacterService = new EpisodeCharacterService();
 
             $url = "https://rickandmortyapi.com/api/character";
             $count = json_decode(file_get_contents($url), true)['info']['count'];
@@ -42,21 +43,7 @@ class DownloadController extends Controller
 
                         $episode = $episodeService->handle($url);
 
-                        $episodeCharacter = Episodecharacters::where('episode_id', $episode->id)
-                                                              ->where('character_id', $character->id)
-                                                              ->first();
-
-                        if (!$episodeCharacter) {
-
-                            $episodeCharacter = new EpisodeCharacters;
-
-                            $episodeCharacter->episode_id = $episode->id;
-                            $episodeCharacter->character_id = $character->id;
-
-                            $episodeCharacter->save();
-
-                        }
-
+                        $episodeCharacterService->handle($episode, $character);
 
                     }
 
@@ -73,10 +60,6 @@ class DownloadController extends Controller
             throw new \Exception($e->getMessage);
 
         }
-
-
-
-
 
     }
 
