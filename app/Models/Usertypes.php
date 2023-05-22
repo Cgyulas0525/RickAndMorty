@@ -7,21 +7,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class Episodecharacters
+ * Class Usertypes
  * @package App\Models
- * @version May 20, 2023, 5:56 am UTC
+ * @version May 22, 2023, 9:46 am UTC
  *
- * @property integer $episode_id
- * @property integer $character_id
+ * @property string $name
+ * @property string $commit
  */
-class Episodecharacters extends Model
+class Usertypes extends Model
 {
     use SoftDeletes;
 
     use HasFactory;
 
-    public $table = 'episodecharacters';
-
+    public $table = 'usertypes';
+    
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -31,8 +31,8 @@ class Episodecharacters extends Model
 
 
     public $fillable = [
-        'episode_id',
-        'character_id'
+        'name',
+        'commit'
     ];
 
     /**
@@ -42,8 +42,8 @@ class Episodecharacters extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'episode_id' => 'integer',
-        'character_id' => 'integer'
+        'name' => 'string',
+        'commit' => 'string'
     ];
 
     /**
@@ -52,20 +52,12 @@ class Episodecharacters extends Model
      * @var array
      */
     public static $rules = [
-        'episode_id' => 'required|integer',
-        'character_id' => 'required|integer',
+        'name' => 'nullable|string|max:191',
+        'commit' => 'nullable|string|max:500',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'
     ];
 
-    public function episode() {
-        return $this->belongsTo(Episodes::class);
-    }
-
-    public function character() {
-        return $this->belongsTo(Characters::class);
-    }
-
-
+    
 }

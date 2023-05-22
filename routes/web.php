@@ -35,15 +35,13 @@ Route::get('destroyWithParam/{table}/{id}/{route}/{param}', [DestroysController:
 Route::get('beforeDestroys/{table}/{id}/{route}', [DestroysController::class, 'beforeDestroys'])->name('beforeDestroys');
 Route::get('beforeDestroysWithParam/{table}/{id}/{route}/{param}', [DestroysController::class, 'beforeDestroysWithParam'])->name('beforeDestroysWithParam');
 
-
-
 Route::resource('episodecharacters', App\Http\Controllers\EpisodecharactersController::class);
-
 
 Route::resource('characters', App\Http\Controllers\CharactersController::class);
 
-
 Route::resource('episodes', App\Http\Controllers\EpisodesController::class);
 
-
 Route::resource('series', App\Http\Controllers\SeriesController::class);
+
+Route::get('serieEpisodsIndex/{serie?}', [App\Http\Controllers\SeriesController::class, 'serieEpisodsIndex'])->name('serieEpisodsIndex');
+Route::get('characterEpisodesIndex/{character}', [App\Http\Controllers\CharactersController::class, 'characterEpisodesIndex'])->name('characterEpisodesIndex');

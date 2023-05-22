@@ -91,9 +91,16 @@ class Characters extends Model
         'deleted_at' => 'nullable'
     ];
 
-    public function episodecharcters() {
-        $this->hasMany(Episodecharacters::class);
+    protected $append = [
+        'episodeNumber',
+    ];
+
+    public function getEpisodeNumberAttribute() {
+        return Episodecharacters::where('character_id', $this->id)->count();
     }
 
+    public function episodecharacter() {
+        return $this->hasMany(Episodecharacters::class, 'character_id');
+    }
 
 }

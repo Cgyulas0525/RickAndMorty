@@ -16,6 +16,8 @@ use Auth;
 use DB;
 use DataTables;
 
+use App\Traits\CharacterEpisodesTrait;
+
 class CharactersController extends AppBaseController
 {
     /** @var CharactersRepository $charactersRepository*/
@@ -26,13 +28,16 @@ class CharactersController extends AppBaseController
         $this->charactersRepository = $charactersRepo;
     }
 
+    use CharacterEpisodesTrait;
+
     public function dwData($data)
     {
         return Datatables::of($data)
             ->addIndexColumn()
+            ->addColumn('episodeNumber', function($data) { return ($data->episodeNumber); })
             ->addColumn('action', function($row){
                 $btn = '<a href="' . route('characters.edit', [$row->id]) . '"
-                             class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-list-alt"></i></a>';
+                             class="edit btn btn-success btn-sm editProduct" title="Adatlap"><i class="fa fa-list-alt"></i></a>';
                 return $btn;
             })
             ->rawColumns(['action'])

@@ -48,7 +48,7 @@
                 order: [[1, 'asc']],
                 ajax: "{{ route('characters.index') }}",
                 columns: [
-                    
+
                     {title: 'Akció', data: 'action', sClass: "text-center", width: '50px', name: 'action', orderable: false, searchable: false},
                     {title: 'Név', data: 'name', name: 'name'},
                     {title: 'Kép', data: "image", "render": function (data) {
@@ -62,6 +62,7 @@
                     {title: 'Faj', data: 'species', name: 'species'},
                     {title: 'Típus', data: 'type', name: 'type'},
                     {title: 'Nem', data: 'gender', name: 'gender'},
+                    {title: 'Epizódok', data: 'episodeNumber', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'episodeNumber'},
 
                 ],
                 buttons: []

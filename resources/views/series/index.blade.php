@@ -13,13 +13,13 @@
             <div class="box-body">
                 <div class="col-lg-12 col-md-12 col-xs-12">
                     <section class="content-header">
-                        <h4>Series</h4>
+                        <h4>{{ __('Évadok') }}</h4>
                     </section>
                     @include('flash::message')
                     <div class="clearfix"></div>
                     <div class="box box-primary">
                         <div class="box-body"  >
-                            <table class="table table-hover table-bordered partners-table" style="width: 100%;"></table>
+                            <table class="table table-hover table-bordered partners-table w-100"></table>
                         </div>
                     </div>
                     <div class="text-center"></div>
@@ -48,10 +48,14 @@
                 order: [[1, 'asc']],
                 ajax: "{{ route('series.index') }}",
                 columns: [
-                    {title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('series.create') !!}"><i class="fa fa-plus-square"></i></a>',
-                        data: 'action', sClass: "text-center", width: '200px', name: 'action', orderable: false, searchable: false},
+                    {title: 'Akció',
+                        data: 'action', sClass: "text-center", width: '50px', name: 'action', orderable: false, searchable: false},
                     {title: 'Név', data: 'name', name: 'name'},
-                ]
+                    {title: 'Epizódok', data: 'episodeNumber', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'episodeNumber'},
+                    {title: 'Első adás', data: 'begin', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'begin'},
+                    {title: 'Utolsó adás', data: 'end', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'end'},
+                ],
+                buttons: []
             });
 
         });

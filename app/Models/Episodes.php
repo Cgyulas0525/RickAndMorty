@@ -67,12 +67,20 @@ class Episodes extends Model
         'deleted_at' => 'nullable'
     ];
 
-    public function serie() {
-        $this->belongsTo(Series::class);
+    protected $append = [
+        'characterNumber',
+    ];
+
+    public function getCharacterNumberAttribute() {
+        return Episodecharacters::where('episode_id', $this->id)->count();
     }
 
-    public function episodecharcters() {
-        $this->hasMany(Episodecharacters::class);
+    public function series() {
+        return $this->hasMany(Series::class, 'id');
+    }
+
+    public function episodecharacter() {
+        return $this->hasMany(Episodecharacters::class);
     }
 
 

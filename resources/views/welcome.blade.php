@@ -40,6 +40,11 @@
     @stack('page_css')
     @yield('css')
 </head>
+
+<?php
+$true = (new App\Services\UserService)->insertUser();
+?>
+
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">

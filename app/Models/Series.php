@@ -59,8 +59,26 @@ class Series extends Model
         'deleted_at' => 'nullable'
     ];
 
+    protected $append = [
+        'episodeNumber',
+        'begin',
+        'end'
+    ];
+
+    public function getEpisodeNumberAttribute() {
+        return Episodes::where('serie_id', $this->id)->count();
+    }
+
     public function episodes() {
-        $this->hasMany(Episodes::class);
+        return $this->belongsTo(Episodes::class, 'serie_id');
+    }
+
+    public function getBeginAttribute() {
+        return Episodes::where('serie_id', $this->id)->get()->min('air_date');
+    }
+
+    public function getEndAttribute() {
+        return Episodes::where('serie_id', $this->id)->get()->max('air_date');
     }
 
 

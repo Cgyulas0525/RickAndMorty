@@ -16,6 +16,8 @@ use Auth;
 use DB;
 use DataTables;
 
+use App\Traits\SerieEpisods;
+
 class SeriesController extends AppBaseController
 {
     /** @var SeriesRepository $seriesRepository*/
@@ -26,15 +28,18 @@ class SeriesController extends AppBaseController
         $this->seriesRepository = $seriesRepo;
     }
 
+    use SerieEpisods;
+
     public function dwData($data)
     {
         return Datatables::of($data)
             ->addIndexColumn()
+            ->addColumn('episodeNumber', function($data) { return ($data->episodeNumber); })
+            ->addColumn('begin', function($data) { return ($data->begin); })
+            ->addColumn('end', function($data) { return ($data->end); })
             ->addColumn('action', function($row){
                 $btn = '<a href="' . route('series.edit', [$row->id]) . '"
-                             class="edit btn btn-success btn-sm editProduct" title="Módosítás"><i class="fa fa-paint-brush"></i></a>';
-                $btn = $btn.'<a href="' . route('beforeDestroys', ['Series', $row["id"], 'series']) . '"
-                                 class="btn btn-danger btn-sm deleteProduct" title="Törlés"><i class="fa fa-trash"></i></a>';
+                             class="edit btn btn-success btn-sm editProduct" title="Adatlap"><i class="fa fa-list-alt"></i></a>';
                 return $btn;
             })
             ->rawColumns(['action'])
