@@ -26,13 +26,13 @@
                                 <div class="mylabel col-sm-1" id="beginText">
                                     {!! Form::label('beginText', 'Tól:') !!}
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     {!! Form::date('begin', App\Models\Episodes::get()->min('air_date'), ['class' => 'form-control','id'=>'begin', 'required' => true]) !!}
                                 </div>
                                 <div class="mylabel col-sm-1" id="endText">
                                     {!! Form::label('endText', 'Ig:') !!}
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     {!! Form::date('end', App\Models\Episodes::get()->max('air_date'), ['class' => 'form-control','id'=>'end', 'required' => true]) !!}
                                 </div>
                             </div>
@@ -77,6 +77,7 @@
                         data: 'action', sClass: "text-center", width: '50px', name: 'action', orderable: false, searchable: false},
                     {title: 'Epizód', data: 'episode', name: 'episode'},
                     {title: 'Név', data: 'name', name: 'name'},
+                    {title: 'Adás dátum', data: 'air_date', render: function (data, type, row) { return data ? moment(data).format('YYYY.MM.DD') : ''; }, sClass: "text-center", width:'150px', name: 'air_date'},
                     {title: 'Karakterek', data: 'characterNumber', render: $.fn.dataTable.render.number( '.', ',', 0), sClass: "text-right", width:'100px', name: 'characterNumber'},
                 ],
                 buttons: []
@@ -86,7 +87,6 @@
                 let serie = $('#serie').val() != 0 ? $('#serie').val() : -9999;
                 let url;
                 if (serie === -9999) {
-                    alert('-9999', serie);
                     $('#begin').show();
                     $('#end').show();
                     $('#beginText').show();
@@ -97,18 +97,58 @@
                     url = url.replace(':serie', serie);
                     url = url.replace(':begin', begin);
                     url = url.replace(':end', end);
-                    alert('-9999', url);
                 } else {
-                    alert(serie);
                     $('#begin').hide();
                     $('#end').hide();
                     $('#beginText').hide();
                     $('#endText').hide();
                     url = '{{ route('serieEpisodsIndex', [":serie"]) }}';
                     url = url.replace(':serie', serie);
-                    alert('Serie', url);
                 }
                 table.ajax.url(url).load();
+            });
+
+            function loader(begin, end) {
+                let serie = -9999;
+                let url = '{{ route('serieEpisodsIndex', [":serie", ":begin", ":end"]) }}';
+                url = url.replace(':serie', serie);
+                url = url.replace(':begin', begin);
+                url = url.replace(':end', end);
+                table.ajax.url(url).load();
+            }
+
+
+            function okDates(begin, end) {
+                if ( begin <= end ) {
+                    return true;
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Az ig nem lehet kisebb mint a tól dátum!',
+                        footer: '<a href="">Kérem javítsa!</a>'
+                    })
+                    $('#end').focus()
+                    return false;
+                }
+            }
+
+
+
+            $('#begin').change(function () {
+                let begin = $('#begin').val();
+                let end = $('#end').val();
+                if ( okDates(begin, end) ) {
+                    loader(begin, end)
+                }
+            });
+
+            $('#end').change(function () {
+                let begin = $('#begin').val();
+                let end = $('#end').val();
+                if ( okDates(begin, end) ) {
+                    loader(begin, end)
+                }
             });
 
 
