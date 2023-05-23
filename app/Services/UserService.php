@@ -22,16 +22,21 @@ class UserService
 
             $usertype->save();
 
+            $usertype = new Usertypes;
+
             $usertype->name = 'Rendszergazda';
             $usertype->created_at = Carbon::now();
 
             $usertype->save();
+
+            $usertype = new Usertypes;
+
             $usertype->name = 'Fejlesztő';
             $usertype->created_at = Carbon::now();
 
             $usertype->save();
 
-            $user = new User;
+            $user = new Users;
 
             $user->name = 'Cseszneki Gyula';
             $user->email = 'cgyulas@gmail.com';
