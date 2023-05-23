@@ -43,5 +43,5 @@ Route::resource('episodes', App\Http\Controllers\EpisodesController::class);
 
 Route::resource('series', App\Http\Controllers\SeriesController::class);
 
-Route::get('serieEpisodsIndex/{serie?}', [App\Http\Controllers\SeriesController::class, 'serieEpisodsIndex'])->name('serieEpisodsIndex');
+Route::get('serieEpisodsIndex/{serie?}/{begin?}/{end?}', [App\Http\Controllers\SeriesController::class, 'serieEpisodsIndex'])->name('serieEpisodsIndex');
 Route::get('characterEpisodesIndex/{character}', [App\Http\Controllers\CharactersController::class, 'characterEpisodesIndex'])->name('characterEpisodesIndex');

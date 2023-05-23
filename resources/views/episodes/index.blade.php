@@ -21,7 +21,19 @@
                                 </div>
                                 <div class="col-sm-2">
                                     {!! Form::select('serie', \App\Http\Controllers\SeriesController::DDDW(), null,
-                                            ['class'=>'select2 form-control', 'id' => 'vmi']) !!}
+                                            ['class'=>'select2 form-control', 'id' => 'serie']) !!}
+                                </div>
+                                <div class="mylabel col-sm-1" id="beginText">
+                                    {!! Form::label('beginText', 'Tól:') !!}
+                                </div>
+                                <div class="col-sm-2">
+                                    {!! Form::date('begin', App\Models\Episodes::get()->min('air_date'), ['class' => 'form-control','id'=>'begin', 'required' => true]) !!}
+                                </div>
+                                <div class="mylabel col-sm-1" id="endText">
+                                    {!! Form::label('endText', 'Ig:') !!}
+                                </div>
+                                <div class="col-sm-2">
+                                    {!! Form::date('end', App\Models\Episodes::get()->max('air_date'), ['class' => 'form-control','id'=>'end', 'required' => true]) !!}
                                 </div>
                             </div>
                         </div>
@@ -70,10 +82,32 @@
                 buttons: []
             });
 
-            $('#vmi').change(function () {
-                let vmi = $('#vmi').val() != 0 ? $('#vmi').val() : -9999;
-                let url = '{{ route('serieEpisodsIndex', [":serie"]) }}';
-                url = url.replace(':serie', vmi);
+            $('#serie').change(function () {
+                let serie = $('#serie').val() != 0 ? $('#serie').val() : -9999;
+                let url;
+                if (serie === -9999) {
+                    alert('-9999', serie);
+                    $('#begin').show();
+                    $('#end').show();
+                    $('#beginText').show();
+                    $('#endText').show();
+                    let begin = $('#begin').val();
+                    let end = $('#end').val();
+                    url = '{{ route('serieEpisodsIndex', [":serie", ":begin", ":end"]) }}';
+                    url = url.replace(':serie', serie);
+                    url = url.replace(':begin', begin);
+                    url = url.replace(':end', end);
+                    alert('-9999', url);
+                } else {
+                    alert(serie);
+                    $('#begin').hide();
+                    $('#end').hide();
+                    $('#beginText').hide();
+                    $('#endText').hide();
+                    url = '{{ route('serieEpisodsIndex', [":serie"]) }}';
+                    url = url.replace(':serie', serie);
+                    alert('Serie', url);
+                }
                 table.ajax.url(url).load();
             });
 
