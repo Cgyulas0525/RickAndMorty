@@ -13,7 +13,7 @@
             <div class="col-lg-6 col-md-6 col-xs-12">
                 <div class="info-box mb-3 bg-danger">
                     <div class="info-box-content">
-                        <span class="h4"> {{ __( 'Adat törlés BABABA' ) }}:</span>
+                        <span class="h4"> {{ __( 'Adat törlés DADADA' ) }}:</span>
                         <h1><a href="#" class="btn btn-default btn-block" id="truncateButton">{{ __('Indít') }}</a></h1>
                     </div>
                     <!-- /.info-box-content -->
