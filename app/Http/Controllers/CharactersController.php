@@ -10,10 +10,10 @@ use App\Http\Controllers\AppBaseController;
 use App\Models\Characters;
 
 use Illuminate\Http\Request;
-use Flash;
+
+use Illuminate\Support\Facades\Redis;
 use Response;
 use Auth;
-use DB;
 use DataTables;
 
 use App\Traits\CharacterEpisodesTrait;
@@ -30,7 +30,7 @@ class CharactersController extends AppBaseController
 
     use CharacterEpisodesTrait;
 
-    public function dwData($data)
+    public function dwData($data): object
     {
         return Datatables::of($data)
             ->addIndexColumn()
@@ -57,6 +57,15 @@ class CharactersController extends AppBaseController
         if( Auth::check() ){
 
             if ($request->ajax()) {
+
+//                $cachedEpisodes = Redis::get('characters');
+//
+//                if(isset($cachedEpisodes)) {
+//                    $data = $cachedEpisodes;
+//                }else {
+//                    $data = $this->charactersRepository->all();
+//                    Redis::set('characters', $data);
+//                }
 
                 $data = $this->charactersRepository->all();
                 return $this->dwData($data);

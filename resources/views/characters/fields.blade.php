@@ -52,9 +52,11 @@
     {!! Form::text('location_url', null, ['class' => 'form-control','maxlength' => 100,'maxlength' => 100]) !!}
 </div>
 
-<div class="form-group col-lg-3 col-md-6 col-sm-12">
-    <img src={{ URL::asset($characters->image) }} alt="User Image">
-</div>
+@if (isset($characters))
+    <div class="form-group col-lg-3 col-md-6 col-sm-12">
+        <img src={{ URL::asset($characters->image) }} alt="User Image">
+    </div>
+@endif
 
 <div class="form-group col-lg-9 col-md-6 col-sm-12">
     <div class="clearfix"></div>

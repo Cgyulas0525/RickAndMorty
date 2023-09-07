@@ -48,8 +48,10 @@
                 order: [[1, 'asc']],
                 ajax: "{{ route('characters.index') }}",
                 columns: [
+                    {title: '<a class="btn btn-primary" title="Felvitel" href="{!! route('characters.create') !!}"><i class="fa fa-plus-square"></i></a>',
+                        data: 'action', sClass: "text-center", width: '200px', name: 'action', orderable: false, searchable: false},
 
-                    {title: 'Akció', data: 'action', sClass: "text-center", width: '50px', name: 'action', orderable: false, searchable: false},
+                    // {title: 'Akció', data: 'action', sClass: "text-center", width: '50px', name: 'action', orderable: false, searchable: false},
                     {title: 'Név', data: 'name', name: 'name'},
                     {title: 'Kép', data: "image", "render": function (data) {
                             if ( data == null ) {

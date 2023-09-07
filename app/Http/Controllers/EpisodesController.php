@@ -6,14 +6,13 @@ use App\Http\Requests\CreateEpisodesRequest;
 use App\Http\Requests\UpdateEpisodesRequest;
 use App\Repositories\EpisodesRepository;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\Redis;
 
 use App\Models\Episodes;
 
 use Illuminate\Http\Request;
-use Flash;
 use Response;
 use Auth;
-use DB;
 use DataTables;
 
 class EpisodesController extends AppBaseController
@@ -54,7 +53,15 @@ class EpisodesController extends AppBaseController
 
             if ($request->ajax()) {
 
-                $data = $this->episodesRepository->all();
+                $cachedEpisodes = Redis::get('episodes');
+
+                if(isset($cachedEpisodes)) {
+                    $data = $cachedEpisodes;
+                }else {
+                    $data = $this->episodesRepository->all();
+                    Redis::set('episodes', $data);
+                }
+//                $data = $this->episodesRepository->all();
                 return $this->dwData($data);
 
             }
